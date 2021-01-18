@@ -6,10 +6,13 @@
   <% else %>
     <ul class="list-group my-5">
       <% @companies.each do |company| %>
-        <a href="<%= company_path(company) %>" class="list-group-item list-group-item-action">
-          <%= company.name %>
-          <%= link_to "Delete Company", company_path(company), data: {confirm: 'Are you sure?'}, method: :delete %>
-        </a>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="<%= company_path(company) %>"><%= company.name %></a>
+          <span class="badge badge-primary badge-pill">
+            <%= link_to "Edit", edit_company_path(company), class: "text-white" %> | 
+            <%= link_to "Destroy", company_path(company), data: {confirm: 'Are you sure?'}, method: :delete, class: "text-white" %>
+          </span>
+        </li>
       <% end %> 
     </ul>
   <% end %>
