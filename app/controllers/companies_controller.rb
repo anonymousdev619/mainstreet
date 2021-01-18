@@ -32,6 +32,14 @@ class CompaniesController < ApplicationController
     end
   end  
 
+  def destroy
+    company = Company.find_by_id(params[:id])
+    if company
+      company.destroy
+      redirect_to companies_path
+    end
+  end
+
   private
 
   def company_params
