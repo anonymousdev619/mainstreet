@@ -25,6 +25,13 @@ class CompaniesController < ApplicationController
   end
 
   def update
+    zipcode = params[:company][:zip_code]
+    if @company.zip_code != params[:company][:zip_code]
+      location = ZipCodes.identify(params[:company][:zip_code])
+      @company.state = location[:state_name]
+      @company.city = location[:city]
+    end
+
     if @company.update(company_params)
       redirect_to companies_path, notice: "Changes Saved"
     else
