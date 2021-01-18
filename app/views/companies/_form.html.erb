@@ -53,8 +53,9 @@
       </div>
       <div class="col-lg offset-lg-1">
         <div class="form-group">
-          <%= f.text_field :email, class: "form-control", placeholder: "hello@company.com"%>
+          <%= f.text_field :email, class: "form-control email-field", placeholder: "hello@company.com" %>
         </div>
+        <small class="email-validity-text text-danger">Not valid</small>
       </div>
     </div>
 
@@ -72,9 +73,46 @@
     <div class="row my-lg-3">
       <div class="col">
         <div class="form-group">
-          <%= f.submit class: "btn btn-success"%>
+          <%= f.submit class: "btn btn-success submit-btn"%>
         </div>
       </div>
     </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  window.addEventListener('DOMContentLoaded', function() {
+    var emailField = document.querySelector(".email-field");
+    var validityText = document.querySelector(".email-validity-text");
+    var form = document.querySelector("form");
+    var submitBtn = document.querySelector(".submit-btn")
+    var isEmailValid = false;
+    validityText.style.display = "none";
+
+    checkValidity(emailField.value.trim());
+    
+    emailField.onkeyup = function(){
+      var email = emailField.value.trim();
+      checkValidity(email)
+    };
+
+    submitBtn.onclick = function(e){
+      e.preventDefault();
+      if(isEmailValid) form.submit();
+    }
+
+    function checkValidity(email){
+      if(email == "") return false;
+      if(email.split("@")[1] != 'getmainstreet.com'){
+        validityText.style.display = "block";
+        emailField.style.border = '1px solid red';
+        isEmailValid = false;
+        return;
+      }
+      validityText.style.display = "none";
+      emailField.style.border = '1px solid lightgrey';
+      isEmailValid = true;
+    }
+
+  }, true);
+</script>
