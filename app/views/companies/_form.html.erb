@@ -84,9 +84,8 @@
   window.addEventListener('DOMContentLoaded', function() {
     var emailField = document.querySelector(".email-field");
     var validityText = document.querySelector(".email-validity-text");
-    var form = document.querySelector("form");
-    var submitBtn = document.querySelector(".submit-btn")
-    var isEmailValid = false;
+    var submitBtn = document.querySelector(".submit-btn");
+    var isEmailValid = null;
     validityText.style.display = "none";
 
     checkValidity(emailField.value.trim());
@@ -96,22 +95,19 @@
       checkValidity(email)
     };
 
-    submitBtn.onclick = function(e){
-      e.preventDefault();
-      if(isEmailValid) form.submit();
-    }
-
     function checkValidity(email){
-      if(email == "") return false;
       if(email.split("@")[1] != 'getmainstreet.com'){
         validityText.style.display = "block";
         emailField.style.border = '1px solid red';
         isEmailValid = false;
+        submitBtn.disabled = true;
         return;
       }
       validityText.style.display = "none";
       emailField.style.border = '1px solid lightgrey';
       isEmailValid = true;
+      if(email == "") isEmailValid = false;
+      if(isEmailValid) submitBtn.disabled = false;
     }
 
   }, true);
