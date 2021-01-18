@@ -28,7 +28,7 @@ class CompaniesController < ApplicationController
     zipcode = params[:company][:zip_code]
     if @company.zip_code != params[:company][:zip_code]
       location = ZipCodes.identify(params[:company][:zip_code])
-      @company.state = location[:state_name]
+      @company.state = location[:state_code]
       @company.city = location[:city]
     end
 

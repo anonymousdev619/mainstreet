@@ -6,13 +6,14 @@
     </div>
     <div class="col text-right">
       <%= link_to "Edit", edit_company_path %> |
-      <%= link_to "Delete", company_path(@company), data: {confirm: 'Are you sure?'}, method: :delete %>
+      <%= link_to "Delete", company_path(@company), data: {confirm: 'Are you sure?'}, method: :delete %> | 
+      <input type="color" id="color-board"/>
     </div>
   </div>
-  <div class="bg-success">
-    <div class="container p-5 text-white">
+  <div class="">
+    <div class="container p-5 top-container text-white">
       <h1><%= @company.name %></h1>
-      <h3><mark>City, State</mark></h3>
+      <h3><mark><%= @company.city || "City" %>, <%= @company.state || "State" %></mark></h3>
       <pre><mark>☝️ This is what needs to be udpated. Examples: Atlanta, GA or Nashvile, TN</mark></pre>
     </div>
   </div>
@@ -37,7 +38,23 @@
     </div>
   </div>
 
-  <div class="bg-success text-white text-center py-3">
+  <div class="text-white bottom-container text-center py-3">
     <p class="lead"><%= @company.phone %> — <%= @company.email %></p>
   </div>
 </div>
+
+<script type="text/javascript">
+  window.addEventListener('DOMContentLoaded', function() {
+    colorBoard = document.querySelector("#color-board");
+    topContainer = document.querySelector(".top-container");
+    bottomContainer = document.querySelector(".bottom-container");
+    setColor();
+    colorBoard.oninput = function(){setColor()}
+    
+    function setColor(){
+      color = colorBoard.value;
+      topContainer.style.backgroundColor = color;
+      bottomContainer.style.backgroundColor = color;
+    }
+  })
+</script>
