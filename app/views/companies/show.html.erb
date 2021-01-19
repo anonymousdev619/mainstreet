@@ -7,7 +7,7 @@
     <div class="col text-right">
       <%= link_to "Edit", edit_company_path %> |
       <%= link_to "Delete", company_path(@company), data: {confirm: 'Are you sure?'}, method: :delete %> | 
-      <input type="color" id="color-board"/>
+      <input type="color" id="color-board" value="#2af9cf"/>
     </div>
   </div>
   <div class="">
@@ -48,13 +48,36 @@
     colorBoard = document.querySelector("#color-board");
     topContainer = document.querySelector(".top-container");
     bottomContainer = document.querySelector(".bottom-container");
+    if(!colorBoard) return;
     setColor();
-    colorBoard.oninput = function(){setColor()}
+    var interval = setInterval(colorPicker, 3000);
 
-    function setColor(){
-      color = colorBoard.value;
+    colorBoard.oninput = function(){
+      clearInterval(interval);
+      setColor();
+    }
+
+    function setColor(color){
+      if(!color) color=colorBoard.value;
+      colorBoard.value = color;
+      var duration = '1';
       topContainer.style.backgroundColor = color;
+      topContainer.style.transition = `${duration}s linear`;
+      bottomContainer.style.transition = `${duration}s linear`;
       bottomContainer.style.backgroundColor = color;
+    }
+
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function colorPicker() {
+      setColor(getRandomColor())
     }
   })
 </script>
