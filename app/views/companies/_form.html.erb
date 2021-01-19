@@ -81,12 +81,13 @@
 </div>
 
 <script type="text/javascript">
-  window.addEventListener('DOMContentLoaded', function() {
+  window.document.addEventListener('turbolinks:load', function() {
     var emailField = document.querySelector(".email-field");
     var validityText = document.querySelector(".email-validity-text");
     var submitBtn = document.querySelector(".submit-btn");
     var isEmailValid = null;
-    validityText.style.display = "none";
+    if(validityText) validityText.style.display = "none";
+    if(!emailField) return;
 
     checkValidity(emailField.value.trim());
     
@@ -97,13 +98,13 @@
 
     function checkValidity(email){
       if(email.split("@")[1] != 'getmainstreet.com'){
-        validityText.style.display = "block";
+        if(validityText) validityText.style.display = "block";
         emailField.style.border = '1px solid red';
         isEmailValid = false;
         submitBtn.disabled = true;
         return;
       }
-      validityText.style.display = "none";
+      if(validityText) validityText.style.display = "none";
       emailField.style.border = '1px solid lightgrey';
       isEmailValid = true;
       if(email == "") isEmailValid = false;
