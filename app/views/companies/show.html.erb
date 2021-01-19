@@ -8,6 +8,7 @@
       <%= link_to "Edit", edit_company_path %> |
       <%= link_to "Delete", company_path(@company), data: {confirm: 'Are you sure?'}, method: :delete %> | 
       <input type="color" id="color-board" value="#2af9cf"/>
+      (speed = <input type="number" class="color-speed" min=1 max=5 value="2" style="width: 50px;">)
     </div>
   </div>
   <div class="">
@@ -45,9 +46,11 @@
 
 <script type="text/javascript">
   window.document.addEventListener('turbolinks:load', function() {
-    colorBoard = document.querySelector("#color-board");
-    topContainer = document.querySelector(".top-container");
-    bottomContainer = document.querySelector(".bottom-container");
+    const colorBoard = document.querySelector("#color-board");
+    const topContainer = document.querySelector(".top-container");
+    const bottomContainer = document.querySelector(".bottom-container");
+    const colorSpeedField = document.querySelector(".color-speed");
+    
     if(!colorBoard) return;
     setColor();
     var interval = setInterval(colorPicker, 3000);
@@ -57,10 +60,16 @@
       setColor();
     }
 
-    function setColor(color){
+    colorSpeedField.onchange = function(e){
+      var speed = e.target.value;
+      clearInterval(interval);
+      interval = setInterval(colorPicker, speed*1000)
+    }
+
+    function setColor(color, duration){
       if(!color) color=colorBoard.value;
       colorBoard.value = color;
-      var duration = '1';
+      if(!duration) duration = '1';
       topContainer.style.backgroundColor = color;
       topContainer.style.transition = `${duration}s linear`;
       bottomContainer.style.transition = `${duration}s linear`;
