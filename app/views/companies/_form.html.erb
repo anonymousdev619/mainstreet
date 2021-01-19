@@ -1,6 +1,17 @@
 <div class="py-5">
   <%= form_for @company do |f| %>
 
+    <% if @company.errors.any?  %>
+      <% @company.errors.full_messages.each do |i| %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= i %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    <% end %>
+
     <div class="row my-lg-3">
       <div class="col-lg-3">
         <label><strong>Name</strong><br><small class="text-muted">The public DBA, or Common name of the organization</small></label>
