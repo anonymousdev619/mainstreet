@@ -30,6 +30,7 @@ class CompaniesControllerTest < ApplicationSystemTestCase
     within("form#edit_company_#{@company.id}") do
       fill_in("company_name", with: "Updated Test Company")
       fill_in("company_zip_code", with: "93009")
+      fill_in("company_email", with: "new_test_company@getmainstreet.com")
       click_button "Update Company"
     end
 
@@ -47,7 +48,7 @@ class CompaniesControllerTest < ApplicationSystemTestCase
       fill_in("company_name", with: "New Test Company")
       fill_in("company_zip_code", with: "28173")
       fill_in("company_phone", with: "5553335555")
-      fill_in("company_email", with: "new_test_company@test.com")
+      fill_in("company_email", with: "new_test_company@getmainstreet.com")
       click_button "Create Company"
     end
 
@@ -57,5 +58,4 @@ class CompaniesControllerTest < ApplicationSystemTestCase
     assert_equal "New Test Company", last_company.name
     assert_equal "28173", last_company.zip_code
   end
-
 end
